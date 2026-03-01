@@ -1,0 +1,103 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../utils/date';
+
+interface Props {
+  latestPost?: CollectionEntry<'blog'>;
+  totalPosts: number;
+  recentPosts?: CollectionEntry<'blog'>[];
+}
+
+const { latestPost, totalPosts, recentPosts = [] } = Astro.props;
+---
+
+<section class="gradient-bg py-16 sm:py-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <!-- Title -->
+    <div class="text-center mb-12 reveal">
+      <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold italic tracking-tight mb-3">
+        Tech Magazine
+      </h1>
+      <p class="text-lg text-surface-800/60 dark:text-surface-200/60">
+        AI & Development Insights
+      </p>
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="bento-grid reveal reveal-delay-1">
+      {
+        latestPost && (
+          <a
+            href={`/blog-magazine/blog/${latestPost.id}/`}
+            class="featured relative rounded-2xl overflow-hidden card-3d group bg-surface-900"
+          >
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent z-10" />
+            <div class="absolute inset-0 bg-primary-500/10" />
+            <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-20">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-accent-500 text-white mb-3">
+                Featured
+              </span>
+              <h2 class="text-2xl sm:text-3xl font-display font-bold text-white mb-2 group-hover:text-accent-400 transition-colors">
+                {latestPost.data.title}
+              </h2>
+              <p class="text-sm text-white/70 line-clamp-2 mb-3 max-w-lg">
+                {latestPost.data.description}
+              </p>
+              <div class="flex items-center gap-3 text-xs text-white/50">
+                <time datetime={latestPost.data.pubDate.toISOString()}>
+                  {formatDate(latestPost.data.pubDate)}
+                </time>
+                <span>{latestPost.data.category}</span>
+              </div>
+            </div>
+          </a>
+        )
+      }
+
+      {
+        recentPosts.slice(0, 2).map((post, i) => (
+          <a
+            href={`/blog-magazine/blog/${post.id}/`}
+            class:list={[
+              'relative rounded-2xl overflow-hidden card-3d group',
+              'bg-surface-100 dark:bg-surface-800 border border-surface-200 dark:border-surface-800',
+              i === 0 && 'wide',
+            ]}
+          >
+            <div class="p-5 h-full flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 mb-2">
+                  {post.data.tags.slice(0, 2).map((tag: string) => (
+                    <span class="px-2 py-0.5 text-[10px] font-semibold uppercase rounded-md bg-primary-500/10 text-primary-600 dark:text-primary-400">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h3 class="text-lg font-display font-bold mb-2 group-hover:text-primary-500 transition-colors line-clamp-2">
+                  {post.data.title}
+                </h3>
+                <p class="text-sm text-surface-800/60 dark:text-surface-200/60 line-clamp-2">
+                  {post.data.description}
+                </p>
+              </div>
+              <time
+                class="text-xs text-surface-800/40 dark:text-surface-200/40 mt-3"
+                datetime={post.data.pubDate.toISOString()}
+              >
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+          </a>
+        ))
+      }
+
+      <!-- Stats Card -->
+      <div class="rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 p-5 text-white flex flex-col justify-center items-center text-center">
+        <div class="text-4xl font-display font-bold mb-1">{totalPosts}</div>
+        <div class="text-sm opacity-80">Articles Published</div>
+        <div class="w-12 h-0.5 bg-white/30 my-3"></div>
+        <div class="text-xs opacity-60">AI & Tech Insights</div>
+      </div>
+    </div>
+  </div>
+</section>

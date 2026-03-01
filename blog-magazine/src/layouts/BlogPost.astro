@@ -1,0 +1,170 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import ShareButtons from '../components/ShareButtons.astro';
+import BackToTop from '../components/BackToTop.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { formatDate, getReadingTime } from '../utils/date';
+import { getRelatedPosts } from '../utils/posts';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  headings: MarkdownHeading[];
+}
+
+const { post, headings } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, category, heroImage, aiGenerated } = post.data;
+const readingTime = getReadingTime(post.body ?? '');
+const fullURL = new URL(Astro.url.pathname, Astro.site).toString();
+const relatedPosts = await getRelatedPosts(post.id, tags, 3);
+---
+
+<BaseLayout title={title} description={description} ogType="article">
+  <Header slot="header" />
+
+  <!-- Reading Progress -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <article class="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+    <div class="flex gap-10">
+      <!-- Main Content -->
+      <div class="flex-1 min-w-0 max-w-3xl">
+        <!-- Header -->
+        <header class="mb-8">
+          <div class="flex items-center gap-2 mb-4 text-sm">
+            <a href="/blog-magazine/blog/" class="text-primary-500 hover:underline">Blog</a>
+            <span class="text-surface-800/30 dark:text-surface-200/30">/</span>
+            <span class="text-surface-800/50 dark:text-surface-200/50">{category}</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">{title}</h1>
+
+          <p class="text-lg text-surface-800/60 dark:text-surface-200/60 mb-6">{description}</p>
+
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-surface-800/50 dark:text-surface-200/50">
+            <time datetime={pubDate.toISOString()}>
+              {formatDate(pubDate)}
+            </time>
+            {
+              updatedDate && (
+                <span>
+                  (Updated: {formatDate(updatedDate)})
+                </span>
+              )
+            }
+            <span>{readingTime} read</span>
+            {
+              aiGenerated && (
+                <span class="px-2 py-0.5 rounded text-xs font-medium bg-accent-500/15 text-accent-600 dark:text-accent-400">
+                  AI Generated
+                </span>
+              )
+            }
+          </div>
+
+          <div class="flex flex-wrap gap-2 mt-4">
+            {
+              tags.map((tag) => (
+                <a
+                  href={`/blog-magazine/tags/${tag}/`}
+                  class="px-2.5 py-1 text-xs rounded-lg bg-surface-200/70 dark:bg-surface-800/70 hover:bg-primary-500/15 hover:text-primary-500 transition-colors"
+                >
+                  #{tag}
+                </a>
+              ))
+            }
+          </div>
+        </header>
+
+        {
+          heroImage && (
+            <img
+              src={heroImage}
+              alt={title}
+              class="w-full rounded-2xl mb-8 shadow-lg"
+              loading="eager"
+            />
+          )
+        }
+
+        <!-- Article Body -->
+        <div class="prose max-w-none">
+          <slot />
+        </div>
+
+        <!-- Share & Actions -->
+        <div class="mt-10 pt-6 border-t border-surface-200 dark:border-surface-800 flex items-center justify-between">
+          <ShareButtons title={title} url={fullURL} />
+        </div>
+
+        <!-- Related Posts -->
+        {
+          relatedPosts.length > 0 && (
+            <section class="mt-12">
+              <h2 class="text-xl font-bold mb-6">Related Posts</h2>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {relatedPosts.map((relPost, i) => (
+                  <ArticleCard post={relPost} index={i} />
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Giscus Comments -->
+        <section class="mt-12" id="comments">
+          <h2 class="text-xl font-bold mb-6">Comments</h2>
+          <div id="giscus-container">
+            <script
+              is:inline
+              src="https://giscus.app/client.js"
+              data-repo="OWNER/REPO"
+              data-repo-id=""
+              data-category="Blog Comments"
+              data-category-id=""
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="preferred_color_scheme"
+              data-lang="ja"
+              data-loading="lazy"
+              crossorigin="anonymous"
+              async
+            ></script>
+          </div>
+        </section>
+      </div>
+
+      <!-- Sidebar TOC -->
+      <aside class="hidden xl:block w-64 flex-shrink-0">
+        <TableOfContents headings={headings} />
+      </aside>
+    </div>
+  </article>
+
+  <Footer slot="footer" />
+  <BackToTop />
+</BaseLayout>
+
+<script>
+  function initReadingProgress() {
+    const progress = document.getElementById('reading-progress');
+    if (!progress) return;
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progress.style.width = `${Math.min(scrollPercent, 100)}%`;
+    });
+  }
+
+  initReadingProgress();
+  document.addEventListener('astro:after-swap', initReadingProgress);
+</script>

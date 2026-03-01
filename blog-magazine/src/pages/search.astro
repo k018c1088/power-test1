@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+---
+
+<BaseLayout title="Search" description="Search articles">
+  <Header slot="header" />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+    <h1 class="text-3xl font-extrabold mb-8">Search</h1>
+
+    <div id="search"></div>
+  </div>
+
+  <Footer slot="footer" />
+  <BackToTop />
+</BaseLayout>
+
+<script is:inline>
+  async function initSearch() {
+    var container = document.getElementById('search');
+    if (!container) return;
+
+    // Load Pagefind CSS dynamically
+    if (!document.querySelector('link[href*="pagefind-ui.css"]')) {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/blog-magazine/pagefind/pagefind-ui.css';
+      document.head.appendChild(link);
+    }
+
+    // Pagefind UI lazy load
+    try {
+      var mod = await import('/blog-magazine/pagefind/pagefind-ui.js');
+      new mod.PagefindUI({
+        element: '#search',
+        showSubResults: true,
+        showImages: false,
+      });
+
+      var input = container.querySelector('input');
+      if (input) input.focus();
+    } catch (e) {
+      container.innerHTML = '<p style="opacity:0.5">Search index not available. Run <code>npm run build</code> first.</p>';
+    }
+  }
+
+  initSearch();
+  document.addEventListener('astro:after-swap', initSearch);
+</script>
+

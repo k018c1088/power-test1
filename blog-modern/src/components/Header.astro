@@ -1,0 +1,192 @@
+---
+const navLinks = [
+  { href: '/blog-modern/', label: 'Home' },
+  { href: '/blog-modern/blog/', label: 'Blog' },
+  { href: '/blog-modern/downloads/', label: 'Downloads' },
+  { href: '/blog-modern/about/', label: 'About' },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 glass transition-all duration-300"
+  id="site-header"
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a
+      href="/blog-modern/"
+      class="flex items-center gap-2 text-lg font-bold tracking-tight"
+    >
+      <span
+        class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-sm font-black"
+      >
+        T
+      </span>
+      <span class="hidden sm:inline">TechBlog</span>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="hidden md:flex items-center gap-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="px-3 py-2 rounded-lg text-sm font-medium text-surface-800 dark:text-surface-200 hover:bg-surface-200/50 dark:hover:bg-surface-800/50 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2">
+      <!-- Search Button -->
+      <button
+        id="search-btn"
+        class="p-2 rounded-lg hover:bg-surface-200/50 dark:hover:bg-surface-800/50 transition-colors"
+        aria-label="Search"
+        title="Search (Ctrl+K)"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button
+        id="theme-toggle"
+        class="p-2 rounded-lg hover:bg-surface-200/50 dark:hover:bg-surface-800/50 transition-colors"
+        aria-label="Toggle theme"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg
+          class="w-5 h-5 hidden dark:block"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+          ></path>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg
+          class="w-5 h-5 block dark:hidden"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+          ></path>
+        </svg>
+      </button>
+
+      <!-- Mobile Menu -->
+      <button
+        id="mobile-menu-btn"
+        class="p-2 rounded-lg md:hidden hover:bg-surface-200/50 dark:hover:bg-surface-800/50 transition-colors"
+        aria-label="Menu"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav
+    id="mobile-nav"
+    class="hidden md:hidden border-t border-surface-200/50 dark:border-surface-800/50"
+  >
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="px-3 py-2 rounded-lg text-sm font-medium text-surface-800 dark:text-surface-200 hover:bg-surface-200/50 dark:hover:bg-surface-800/50 transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>
+
+<!-- Header spacer -->
+<div class="h-16"></div>
+
+<script>
+  function initHeader() {
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    mobileMenuBtn?.addEventListener('click', () => {
+      mobileNav?.classList.toggle('hidden');
+    });
+
+    // Search button - open search page
+    const searchBtn = document.getElementById('search-btn');
+    searchBtn?.addEventListener('click', () => {
+      window.location.href = '/blog-modern/search/';
+    });
+
+    // Ctrl+K shortcut
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        window.location.href = '/blog-modern/search/';
+      }
+    });
+
+    // Header background on scroll
+    const header = document.getElementById('site-header');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      if (currentScroll > 100) {
+        header?.classList.add('shadow-lg');
+      } else {
+        header?.classList.remove('shadow-lg');
+      }
+      lastScroll = currentScroll;
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
+</script>

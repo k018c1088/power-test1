@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls ~/.claude/settings*)",
+      "Bash(ls /c/Users/lacue/.claude/*.json)",
+      "Bash(curl -s http://127.0.0.1:8188/system_stats)",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -c \"import torch; print\\(''torch version:'', torch.__version__\\); print\\(''cuda available:'', torch.cuda.is_available\\(\\)\\)\")",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128)",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -m pip install --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128)",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -m pip install --upgrade pip)",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -c \"import torch; print\\(''torch:'', torch.__version__\\); print\\(''CUDA available:'', torch.cuda.is_available\\(\\)\\); print\\(''GPU:'', torch.cuda.get_device_name\\(0\\) if torch.cuda.is_available\\(\\) else ''N/A''\\)\")",
+      "Bash(curl -s http://127.0.0.1:8188/object_info/CheckpointLoaderSimple)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); ckpts=data.get\\(''CheckpointLoaderSimple'',{}\\).get\\(''input'',{}\\).get\\(''required'',{}\\).get\\(''ckpt_name'',[[]]\\)[0]; [print\\(c\\) for c in ckpts]\")",
+      "Bash(~/local-ai/venvs/comfyui/Scripts/python.exe -c \" import sys, json data = json.load\\(sys.stdin\\) ckpts = data.get\\(''CheckpointLoaderSimple'',{}\\).get\\(''input'',{}\\).get\\(''required'',{}\\).get\\(''ckpt_name'',[[]]\\)[0] for c in ckpts: print\\(c\\) \")",
+      "Bash(curl -s http://127.0.0.1:8188/object_info/UNETLoader)",
+      "Bash(curl -s http://127.0.0.1:8188/object_info/DualCLIPLoader)",
+      "Bash(curl -s -X POST http://127.0.0.1:8188/prompt -H \"Content-Type: application/json\" -d '{:*)",
+      "Bash(ls -la ~/local-ai/outputs/images/20260301_panda*)",
+      "Bash(python3 -c \":*)",
+      "Bash(py --version)",
+      "Bash(python -c \"import openpyxl; print\\(''ok''\\)\")",
+      "Bash(pip install openpyxl)",
+      "Bash(python -c \":*)",
+      "Bash(npm create astro@latest blog-modern -- --template minimal --no-install --no-git --typescript strict)",
+      "Bash(npm install)",
+      "Bash(npm install @astrojs/mdx @astrojs/sitemap @astrojs/tailwind @tailwindcss/vite tailwindcss@4 astro-pagefind)",
+      "Bash(npm install @astrojs/mdx @astrojs/sitemap @tailwindcss/vite tailwindcss@4)",
+      "Bash(npm install @astrojs/rss)",
+      "Bash(npm run build)",
+      "Bash(gh auth status)"
+    ]
+  }
+}

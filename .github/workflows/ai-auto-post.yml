@@ -1,0 +1,73 @@
+name: AI Auto Post
+
+on:
+  schedule:
+    # Run twice a month: 1st and 15th at 09:00 UTC (18:00 JST)
+    - cron: '0 9 1,15 * *'
+  workflow_dispatch:
+    inputs:
+      blog:
+        description: 'Target blog (modern or magazine)'
+        required: true
+        default: 'modern'
+        type: choice
+        options:
+          - modern
+          - magazine
+      topic:
+        description: 'Article topic (leave empty for auto-select)'
+        required: false
+        type: string
+      provider:
+        description: 'AI provider'
+        required: true
+        default: 'claude'
+        type: choice
+        options:
+          - claude
+          - openai
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install tsx
+        run: npm install -g tsx
+
+      - name: Generate post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          BLOG="${{ github.event.inputs.blog || 'modern' }}"
+          TOPIC="${{ github.event.inputs.topic || '' }}"
+          PROVIDER="${{ github.event.inputs.provider || 'claude' }}"
+
+          if [ -n "$TOPIC" ]; then
+            tsx scripts/generate-post.ts --blog "$BLOG" --topic "$TOPIC" --provider "$PROVIDER"
+          else
+            tsx scripts/generate-post.ts --blog "$BLOG" --auto --provider "$PROVIDER"
+          fi
+
+      - name: Commit and push
+        run: |
+          git config user.name "AI Auto Post"
+          git config user.email "ai-bot@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat: auto-generated blog post [ai-post]"
+            git push
+          fi

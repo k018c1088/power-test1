@@ -1,0 +1,74 @@
+{
+  "topics": [
+    {
+      "title": "【新卒向け】生成AIとは？ChatGPTからClaude Codeまで",
+      "category": "AI入門",
+      "tags": ["AI", "ChatGPT", "Claude", "入門"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "【新卒向け】GitHubの使い方 - 初めてのバージョン管理",
+      "category": "入門",
+      "tags": ["GitHub", "Git", "入門"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "【新卒向け】プログラミング学習ロードマップ2026",
+      "category": "AI入門",
+      "tags": ["プログラミング", "学習", "ロードマップ"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "Markdown完全ガイド - エンジニアの文書術",
+      "category": "技術解説",
+      "tags": ["Markdown", "ドキュメント", "Tips"],
+      "audience": "若手エンジニア",
+      "used": false
+    },
+    {
+      "title": "【新卒向け】AIを使った効率的な学習方法",
+      "category": "AI入門",
+      "tags": ["AI", "学習", "効率化"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "【新卒向け】コマンドライン入門 - ターミナルの基本操作",
+      "category": "入門",
+      "tags": ["CLI", "ターミナル", "入門"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "GitHub Copilotで変わるコーディング - AIペアプログラミング入門",
+      "category": "AI入門",
+      "tags": ["GitHub Copilot", "AI", "コーディング"],
+      "audience": "若手エンジニア",
+      "used": false
+    },
+    {
+      "title": "【新卒向け】API入門 - Webサービスの仕組みを理解する",
+      "category": "入門",
+      "tags": ["API", "Web", "入門"],
+      "audience": "IT未経験の新卒エンジニア",
+      "used": false
+    },
+    {
+      "title": "Docker入門 - コンテナ技術の基礎を学ぶ",
+      "category": "技術解説",
+      "tags": ["Docker", "コンテナ", "DevOps"],
+      "audience": "若手エンジニア",
+      "used": false
+    },
+    {
+      "title": "CI/CD入門 - GitHub Actionsで始める自動化",
+      "category": "技術解説",
+      "tags": ["CI/CD", "GitHub Actions", "自動化"],
+      "audience": "若手エンジニア",
+      "used": false
+    }
+  ]
+}

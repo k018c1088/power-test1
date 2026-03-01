@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+import { getPublishedPosts } from '../utils/posts';
+import { formatDate } from '../utils/date';
+
+const posts = await getPublishedPosts();
+
+// Group by year-month
+const grouped = new Map<string, typeof posts>();
+for (const post of posts) {
+  const key = `${post.data.pubDate.getFullYear()}-${String(post.data.pubDate.getMonth() + 1).padStart(2, '0')}`;
+  if (!grouped.has(key)) grouped.set(key, []);
+  grouped.get(key)!.push(post);
+}
+---
+
+<BaseLayout title="Archive" description="All articles by date">
+  <Header slot="header" />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+    <h1 class="text-3xl font-extrabold mb-2">Archive</h1>
+    <p class="text-surface-800/60 dark:text-surface-200/60 mb-8">
+      {posts.length} articles
+    </p>
+
+    <div class="space-y-10">
+      {
+        [...grouped.entries()].map(([yearMonth, monthPosts]) => {
+          const [year, month] = yearMonth.split('-');
+          return (
+            <section>
+              <h2 class="text-lg font-bold mb-4 sticky top-16 bg-surface-50 dark:bg-surface-950 py-2 z-10 border-b border-surface-200 dark:border-surface-800">
+                {year}年 {parseInt(month)}月
+                <span class="text-sm font-normal text-surface-800/40 dark:text-surface-200/40 ml-2">
+                  ({monthPosts.length})
+                </span>
+              </h2>
+              <ul class="space-y-3">
+                {monthPosts.map((post) => (
+                  <li class="flex items-baseline gap-4">
+                    <time
+                      datetime={post.data.pubDate.toISOString()}
+                      class="text-sm text-surface-800/40 dark:text-surface-200/40 font-mono flex-shrink-0 w-20"
+                    >
+                      {String(post.data.pubDate.getMonth() + 1).padStart(2, '0')}/{String(post.data.pubDate.getDate()).padStart(2, '0')}
+                    </time>
+                    <a
+                      href={`/blog-magazine/blog/${post.id}/`}
+                      class="hover:text-primary-500 transition-colors"
+                    >
+                      {post.data.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+  <BackToTop />
+</BaseLayout>

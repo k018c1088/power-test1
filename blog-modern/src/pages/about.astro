@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+---
+
+<BaseLayout title="About" description="About the author and this blog">
+  <Header slot="header" />
+
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 py-10">
+    <h1 class="text-3xl font-extrabold mb-8">About</h1>
+
+    <div class="prose max-w-none">
+      <div class="flex items-center gap-6 mb-8 not-prose">
+        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center text-white text-2xl font-black flex-shrink-0">
+          T
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">TechBlog</h2>
+          <p class="text-surface-800/60 dark:text-surface-200/60">ITエンジニア</p>
+        </div>
+      </div>
+
+      <h2>このブログについて</h2>
+      <p>
+        AI・自動化・開発ツールに関する技術ナレッジを共有するブログです。
+        日々の業務で得た知見やツールの使い方、技術トレンドについて発信しています。
+      </p>
+
+      <h2>技術スタック</h2>
+      <ul>
+        <li><strong>フレームワーク:</strong> Astro + TypeScript</li>
+        <li><strong>スタイリング:</strong> Tailwind CSS 4</li>
+        <li><strong>ホスティング:</strong> GitHub Pages</li>
+        <li><strong>CI/CD:</strong> GitHub Actions</li>
+        <li><strong>検索:</strong> Pagefind</li>
+        <li><strong>コメント:</strong> Giscus</li>
+        <li><strong>AI自動投稿:</strong> Claude API + GitHub Actions</li>
+      </ul>
+
+      <h2>カテゴリ</h2>
+      <ul>
+        <li><strong>技術解説:</strong> 開発ツールやフレームワークの使い方</li>
+        <li><strong>AI入門:</strong> 生成AIや機械学習の入門記事</li>
+        <li><strong>ツール紹介:</strong> 自作ツールや便利なツールの紹介</li>
+        <li><strong>設計書:</strong> システム設計に関するドキュメント</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>
+        お問い合わせやフィードバックは、各記事のコメント欄または
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+        からお気軽にどうぞ。
+      </p>
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+  <BackToTop />
+</BaseLayout>

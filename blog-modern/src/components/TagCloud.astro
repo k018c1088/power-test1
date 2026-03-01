@@ -1,0 +1,38 @@
+---
+interface Props {
+  tags: Map<string, number>;
+  activeTag?: string;
+}
+
+const { tags, activeTag } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2">
+  <a
+    href="/blog-modern/blog/"
+    class:list={[
+      'px-3 py-1.5 text-sm rounded-lg transition-all font-medium',
+      !activeTag
+        ? 'bg-primary-500 text-white shadow-md shadow-primary-500/25'
+        : 'bg-surface-200/70 dark:bg-surface-800/70 hover:bg-surface-200 dark:hover:bg-surface-800',
+    ]}
+  >
+    All
+  </a>
+  {
+    [...tags.entries()].map(([tag, count]) => (
+      <a
+        href={`/blog-modern/tags/${tag}/`}
+        class:list={[
+          'px-3 py-1.5 text-sm rounded-lg transition-all font-medium',
+          activeTag === tag
+            ? 'bg-primary-500 text-white shadow-md shadow-primary-500/25'
+            : 'bg-surface-200/70 dark:bg-surface-800/70 hover:bg-surface-200 dark:hover:bg-surface-800',
+        ]}
+      >
+        #{tag}
+        <span class="ml-1 text-xs opacity-60">{count}</span>
+      </a>
+    ))
+  }
+</div>

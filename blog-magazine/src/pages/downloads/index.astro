@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import DownloadCard from '../../components/DownloadCard.astro';
+import BackToTop from '../../components/BackToTop.astro';
+import { getCollection } from 'astro:content';
+
+const downloads = await getCollection('downloads');
+const sorted = downloads.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="Downloads" description="Tools, scripts, and templates for download">
+  <Header slot="header" />
+
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-10">
+    <h1 class="text-3xl font-extrabold mb-2">Downloads</h1>
+    <p class="text-surface-800/60 dark:text-surface-200/60 mb-8">
+      Tools, scripts, and templates ({downloads.length})
+    </p>
+
+    <div class="grid grid-cols-1 gap-4">
+      {sorted.map((item) => <DownloadCard item={item} />)}
+    </div>
+
+    {
+      downloads.length === 0 && (
+        <div class="text-center py-20 text-surface-800/40 dark:text-surface-200/40">
+          <p class="text-lg">No downloads available yet.</p>
+        </div>
+      )
+    }
+  </div>
+
+  <Footer slot="footer" />
+  <BackToTop />
+</BaseLayout>

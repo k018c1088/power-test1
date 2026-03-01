@@ -1,0 +1,88 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '../utils/date';
+
+interface Props {
+  latestPost?: CollectionEntry<'blog'>;
+  totalPosts: number;
+}
+
+const { latestPost, totalPosts } = Astro.props;
+---
+
+<section class="relative overflow-hidden gradient-bg py-20 sm:py-28 lg:py-32">
+  <!-- Mesh overlay -->
+  <div class="absolute inset-0 opacity-30" aria-hidden="true">
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-400/20 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/20 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
+    <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-primary-300/15 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+  </div>
+
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12 reveal">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 via-accent-400 to-primary-400 dark:from-primary-200 dark:via-accent-400 dark:to-primary-300">
+          Tech Blog
+        </span>
+      </h1>
+      <p class="text-lg sm:text-xl text-surface-800/70 dark:text-surface-200/70 max-w-2xl mx-auto">
+        AI・自動化・開発ツールに関する技術ナレッジを発信
+      </p>
+    </div>
+
+    {
+      latestPost && (
+        <div class="max-w-2xl mx-auto reveal reveal-delay-1">
+          <a
+            href={`/blog-modern/blog/${latestPost.id}/`}
+            class="block glass rounded-2xl p-6 sm:p-8 card-3d group"
+          >
+            <div class="flex items-center gap-2 mb-3">
+              <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-primary-500/20 text-primary-400 dark:text-primary-300">
+                Latest
+              </span>
+              <span class="text-xs text-surface-800/50 dark:text-surface-200/50">
+                {formatDate(latestPost.data.pubDate)}
+              </span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold mb-2 group-hover:text-primary-400 transition-colors">
+              {latestPost.data.title}
+            </h2>
+            <p class="text-sm text-surface-800/60 dark:text-surface-200/60 line-clamp-2">
+              {latestPost.data.description}
+            </p>
+            <div class="flex flex-wrap gap-2 mt-4">
+              {latestPost.data.tags.slice(0, 3).map((tag: string) => (
+                <span class="px-2 py-0.5 text-xs rounded-md bg-surface-200/50 dark:bg-surface-800/50">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </a>
+        </div>
+      )
+    }
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-4 max-w-md mx-auto mt-10 reveal reveal-delay-2">
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-bold text-primary-400" data-count={totalPosts}>
+          {totalPosts}
+        </div>
+        <div class="text-xs text-surface-800/50 dark:text-surface-200/50 mt-1">Articles</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-bold text-accent-500" id="hero-views">
+          --
+        </div>
+        <div class="text-xs text-surface-800/50 dark:text-surface-200/50 mt-1">Views</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl sm:text-3xl font-bold text-primary-300" id="hero-downloads">
+          --
+        </div>
+        <div class="text-xs text-surface-800/50 dark:text-surface-200/50 mt-1">Downloads</div>
+      </div>
+    </div>
+  </div>
+</section>

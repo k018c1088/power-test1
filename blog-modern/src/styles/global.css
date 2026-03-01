@@ -1,0 +1,369 @@
+@import "tailwindcss";
+
+/* ========================================
+   Design System - Tech Modern Theme
+   ======================================== */
+
+@theme {
+  /* Primary palette - Electric blue */
+  --color-primary-50: oklch(0.97 0.02 260);
+  --color-primary-100: oklch(0.93 0.05 260);
+  --color-primary-200: oklch(0.85 0.1 260);
+  --color-primary-300: oklch(0.75 0.15 260);
+  --color-primary-400: oklch(0.65 0.2 260);
+  --color-primary-500: oklch(0.55 0.25 260);
+  --color-primary-600: oklch(0.48 0.22 260);
+  --color-primary-700: oklch(0.4 0.18 260);
+  --color-primary-800: oklch(0.33 0.14 260);
+  --color-primary-900: oklch(0.27 0.1 260);
+
+  /* Accent - Cyan/Teal */
+  --color-accent-400: oklch(0.78 0.15 180);
+  --color-accent-500: oklch(0.7 0.18 180);
+  --color-accent-600: oklch(0.6 0.16 180);
+
+  /* Surface colors */
+  --color-surface-50: oklch(0.985 0.002 260);
+  --color-surface-100: oklch(0.96 0.005 260);
+  --color-surface-200: oklch(0.92 0.008 260);
+  --color-surface-800: oklch(0.2 0.015 260);
+  --color-surface-900: oklch(0.14 0.012 260);
+  --color-surface-950: oklch(0.1 0.01 260);
+
+  /* Typography */
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-surface-50);
+  color: var(--color-surface-900);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode */
+html.dark body {
+  background: var(--color-surface-950);
+  color: var(--color-surface-100);
+}
+
+/* ========================================
+   Glassmorphism Utilities
+   ======================================== */
+
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+html:not(.dark) .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================
+   Animated Gradient Background
+   ======================================== */
+
+.gradient-bg {
+  background: linear-gradient(
+    -45deg,
+    oklch(0.25 0.08 260),
+    oklch(0.18 0.12 280),
+    oklch(0.22 0.1 200),
+    oklch(0.2 0.08 240)
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+html:not(.dark) .gradient-bg {
+  background: linear-gradient(
+    -45deg,
+    oklch(0.95 0.04 260),
+    oklch(0.92 0.06 280),
+    oklch(0.94 0.05 200),
+    oklch(0.93 0.04 240)
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ========================================
+   Card 3D Hover Effect
+   ======================================== */
+
+.card-3d {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(2deg) rotateX(2deg) translateY(-4px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+html:not(.dark) .card-3d:hover {
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* ========================================
+   Scroll Reveal Animations
+   ======================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ========================================
+   Reading Progress Bar
+   ======================================== */
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary-400),
+    var(--color-accent-500)
+  );
+  z-index: 100;
+  transition: width 0.1s linear;
+}
+
+/* ========================================
+   Prose / Article Styling
+   ======================================== */
+
+.prose {
+  --tw-prose-body: var(--color-surface-800);
+  --tw-prose-headings: var(--color-surface-900);
+  line-height: 1.8;
+  font-size: 1.0625rem;
+}
+
+html.dark .prose {
+  --tw-prose-body: var(--color-surface-200);
+  --tw-prose-headings: var(--color-surface-50);
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 5rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid oklch(0.8 0.02 260);
+}
+
+html.dark .prose h2 {
+  border-bottom-color: oklch(0.3 0.02 260);
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose a {
+  color: var(--color-primary-500);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-primary-500);
+}
+
+.prose code:not(pre code) {
+  background: oklch(0.92 0.01 260);
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  font-family: var(--font-mono);
+}
+
+html.dark .prose code:not(pre code) {
+  background: oklch(0.25 0.02 260);
+}
+
+.prose pre {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid oklch(0.88 0.01 260);
+}
+
+html.dark .prose pre {
+  border-color: oklch(0.25 0.02 260);
+}
+
+.prose img {
+  border-radius: 0.75rem;
+  margin: 1.5rem auto;
+}
+
+.prose blockquote {
+  border-left: 4px solid var(--color-primary-400);
+  padding-left: 1rem;
+  font-style: italic;
+  color: oklch(0.5 0.02 260);
+}
+
+html.dark .prose blockquote {
+  color: oklch(0.7 0.02 260);
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose th, .prose td {
+  padding: 0.75rem 1rem;
+  border: 1px solid oklch(0.88 0.01 260);
+  text-align: left;
+}
+
+html.dark .prose th, html.dark .prose td {
+  border-color: oklch(0.25 0.02 260);
+}
+
+.prose th {
+  background: oklch(0.95 0.005 260);
+  font-weight: 600;
+}
+
+html.dark .prose th {
+  background: oklch(0.18 0.01 260);
+}
+
+/* ========================================
+   Shiki Code Block Theme Sync
+   ======================================== */
+
+pre.astro-code {
+  background-color: oklch(0.97 0.003 260) !important;
+}
+
+html.dark pre.astro-code {
+  background-color: oklch(0.13 0.01 260) !important;
+}
+
+.astro-code span {
+  color: var(--shiki-light);
+}
+
+html.dark .astro-code span {
+  color: var(--shiki-dark);
+}
+
+/* ========================================
+   Scrollbar
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.7 0.02 260);
+  border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.02 260);
+}
+
+/* ========================================
+   Selection
+   ======================================== */
+
+::selection {
+  background: oklch(0.65 0.2 260 / 0.3);
+}
+
+/* ========================================
+   Pagefind Override
+   ======================================== */
+
+.pagefind-ui {
+  --pagefind-ui-primary: var(--color-primary-500);
+  --pagefind-ui-text: var(--color-surface-900);
+  --pagefind-ui-background: var(--color-surface-50);
+  --pagefind-ui-border: oklch(0.85 0.01 260);
+  --pagefind-ui-tag: oklch(0.93 0.01 260);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 0.5rem;
+  --pagefind-ui-font: var(--font-body);
+}
+
+html.dark .pagefind-ui {
+  --pagefind-ui-text: var(--color-surface-100);
+  --pagefind-ui-background: var(--color-surface-900);
+  --pagefind-ui-border: oklch(0.3 0.02 260);
+  --pagefind-ui-tag: oklch(0.22 0.02 260);
+}
