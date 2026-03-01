@@ -306,18 +306,31 @@ html.dark .prose th {
 
 pre.astro-code {
   background-color: oklch(0.97 0.003 260) !important;
+  color: oklch(0.2 0.015 260);
 }
 
 html.dark pre.astro-code {
-  background-color: oklch(0.13 0.01 260) !important;
+  background-color: oklch(0.18 0.015 260) !important;
+  color: oklch(0.88 0.01 260);
 }
 
 .astro-code span {
-  color: var(--shiki-light);
+  color: var(--shiki-light) !important;
 }
 
 html.dark .astro-code span {
-  color: var(--shiki-dark);
+  color: var(--shiki-dark) !important;
+}
+
+/* Plain text / no-highlight code blocks */
+pre:not(.astro-code) {
+  background: oklch(0.96 0.005 260);
+  color: oklch(0.2 0.015 260);
+}
+
+html.dark pre:not(.astro-code) {
+  background: oklch(0.18 0.015 260);
+  color: oklch(0.88 0.01 260);
 }
 
 /* ========================================

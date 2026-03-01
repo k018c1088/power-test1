@@ -343,18 +343,31 @@ html.dark .prose th {
 
 pre.astro-code {
   background-color: oklch(0.97 0.005 60) !important;
+  color: oklch(0.2 0.01 50);
 }
 
 html.dark pre.astro-code {
-  background-color: oklch(0.13 0.008 50) !important;
+  background-color: oklch(0.18 0.012 50) !important;
+  color: oklch(0.88 0.01 50);
 }
 
 .astro-code span {
-  color: var(--shiki-light);
+  color: var(--shiki-light) !important;
 }
 
 html.dark .astro-code span {
-  color: var(--shiki-dark);
+  color: var(--shiki-dark) !important;
+}
+
+/* Plain text / no-highlight code blocks */
+pre:not(.astro-code) {
+  background: oklch(0.96 0.008 60);
+  color: oklch(0.2 0.01 50);
+}
+
+html.dark pre:not(.astro-code) {
+  background: oklch(0.18 0.012 50);
+  color: oklch(0.88 0.01 50);
 }
 
 /* ========================================
