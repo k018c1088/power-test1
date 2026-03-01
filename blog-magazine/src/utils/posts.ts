@@ -26,6 +26,21 @@ export async function getPostsByTag(tag: string): Promise<CollectionEntry<'blog'
   return posts.filter((post) => post.data.tags.includes(tag));
 }
 
+export async function getAllCategories(): Promise<Map<string, number>> {
+  const posts = await getPublishedPosts();
+  const catMap = new Map<string, number>();
+  for (const post of posts) {
+    const cat = post.data.category;
+    catMap.set(cat, (catMap.get(cat) || 0) + 1);
+  }
+  return new Map([...catMap.entries()].sort((a, b) => b[1] - a[1]));
+}
+
+export async function getPostsByCategory(category: string): Promise<CollectionEntry<'blog'>[]> {
+  const posts = await getPublishedPosts();
+  return posts.filter((post) => post.data.category === category);
+}
+
 export async function getRelatedPosts(
   currentSlug: string,
   tags: string[],

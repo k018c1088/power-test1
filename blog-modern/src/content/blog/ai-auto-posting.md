@@ -4,7 +4,7 @@ description: "GitHub Actions + Claude APIを使ったブログ記事の自動生
 pubDate: 2026-03-01
 tags: ["AI", "Claude API", "GitHub Actions", "自動化"]
 category: "技術解説"
-draft: false
+draft: true
 aiGenerated: false
 ---
 

@@ -4,7 +4,7 @@ description: "ChatGPTやClaudeなどの生成AIを学習ツールとして活用
 pubDate: 2026-03-09
 tags: ["AI", "学習方法", "新卒向け", "生成AI"]
 category: "AI入門"
-draft: false
+draft: true
 aiGenerated: true
 ---
 

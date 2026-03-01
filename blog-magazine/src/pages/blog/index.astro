@@ -3,12 +3,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import TagCloud from '../../components/TagCloud.astro';
 import BackToTop from '../../components/BackToTop.astro';
-import { getPublishedPosts, getAllTags } from '../../utils/posts';
+import { getPublishedPosts, getAllCategories } from '../../utils/posts';
 
 const posts = await getPublishedPosts();
-const tags = await getAllTags();
+const categories = await getAllCategories();
 ---
 
 <BaseLayout title="Blog" description="All articles">
@@ -20,14 +19,33 @@ const tags = await getAllTags();
       All articles ({posts.length})
     </p>
 
-    <!-- Tags -->
-    <div class="mb-8">
-      <TagCloud tags={tags} />
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap gap-2 mb-8" id="category-tabs">
+      <button
+        class="category-tab active px-4 py-2 rounded-full text-sm font-medium transition-colors bg-primary-500 text-white"
+        data-category="all"
+      >
+        All ({posts.length})
+      </button>
+      {
+        [...categories.entries()].map(([cat, count]) => (
+          <button
+            class="category-tab px-4 py-2 rounded-full text-sm font-medium transition-colors bg-surface-200/50 dark:bg-surface-800/50 text-surface-800 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-800"
+            data-category={cat}
+          >
+            {cat} ({count})
+          </button>
+        ))
+      }
     </div>
 
     <!-- Posts Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {posts.map((post, i) => <ArticleCard post={post} index={i} />)}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="posts-grid">
+      {posts.map((post, i) => (
+        <div class="post-item" data-category={post.data.category}>
+          <ArticleCard post={post} index={i} />
+        </div>
+      ))}
     </div>
 
     {
@@ -42,3 +60,36 @@ const tags = await getAllTags();
   <Footer slot="footer" />
   <BackToTop />
 </BaseLayout>
+
+<script is:inline>
+  function initCategoryTabs() {
+    var tabs = document.querySelectorAll('.category-tab');
+    var items = document.querySelectorAll('.post-item');
+
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var cat = tab.getAttribute('data-category');
+
+        // Update active tab
+        tabs.forEach(function(t) {
+          t.classList.remove('active', 'bg-primary-500', 'text-white');
+          t.classList.add('bg-surface-200/50', 'text-surface-800');
+        });
+        tab.classList.add('active', 'bg-primary-500', 'text-white');
+        tab.classList.remove('bg-surface-200/50', 'text-surface-800');
+
+        // Filter posts
+        items.forEach(function(item) {
+          if (cat === 'all' || item.getAttribute('data-category') === cat) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  initCategoryTabs();
+  document.addEventListener('astro:after-swap', initCategoryTabs);
+</script>

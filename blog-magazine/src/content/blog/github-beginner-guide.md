@@ -3,8 +3,8 @@ title: "【新卒向け】GitHubの使い方 - 初めてのバージョン管理
 description: "Git/GitHubを初めて触る新卒エンジニア向けに、基本的な使い方をステップバイステップで解説します。"
 pubDate: 2026-03-06
 tags: ["GitHub", "Git", "入門"]
-category: "入門"
-draft: false
+category: "AI入門"
+draft: true
 aiGenerated: true
 ---
 

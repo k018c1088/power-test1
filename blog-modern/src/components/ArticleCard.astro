@@ -37,14 +37,16 @@ const readingTime = getReadingTime(post.body ?? '');
         </time>
         <span class="w-1 h-1 rounded-full bg-current opacity-50"></span>
         <span>{readingTime}</span>
+        <span class="w-1 h-1 rounded-full bg-current opacity-50" />
         {
-          post.data.aiGenerated && (
-            <>
-              <span class="w-1 h-1 rounded-full bg-current opacity-50" />
-              <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-accent-500/15 text-accent-600 dark:text-accent-400">
-                AI
-              </span>
-            </>
+          post.data.aiGenerated ? (
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-accent-500/15 text-accent-600 dark:text-accent-400">
+              AI生成
+            </span>
+          ) : (
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-primary-500/15 text-primary-600 dark:text-primary-400">
+              手動投稿
+            </span>
           )
         }
       </div>

@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Dark mode: use .dark class instead of prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ========================================
    Design System - Tech Modern Theme
    ======================================== */

@@ -28,7 +28,22 @@
       "Bash(npm install @astrojs/rss)",
       "Bash(npm run build)",
       "Bash(gh auth status)",
-      "Bash(gh repo create power-test1 --public --source=. --push --description \"Personal tech blog system with dual designs \\(Modern & Magazine\\) - Astro 5 + Tailwind CSS 4 + AI auto-posting\")"
+      "Bash(gh repo create power-test1 --public --source=. --push --description \"Personal tech blog system with dual designs \\(Modern & Magazine\\) - Astro 5 + Tailwind CSS 4 + AI auto-posting\")",
+      "Bash(gh api repos/k018c1088/power-test1/pages -X PUT -f build_type=workflow -f source.branch=main -f source.path=\"/\")",
+      "Bash(gh api repos/k018c1088/power-test1/pages -X POST -f build_type=workflow -f source.branch=main -f source.path=\"/\")",
+      "Bash(gh api repos/k018c1088/power-test1 -X PATCH -f default_branch=main)",
+      "Bash(gh run list --repo k018c1088/power-test1 --limit 5)",
+      "Bash(gh run watch 22547986341 --repo k018c1088/power-test1)",
+      "Bash(gh run view 22547986341 --repo k018c1088/power-test1 --log-failed)",
+      "Bash(gh run view 22547986341 --repo k018c1088/power-test1)",
+      "Bash(gh api repos/k018c1088/power-test1/pages -X PUT -f build_type=workflow)",
+      "Bash(gh run rerun 22547986341 --repo k018c1088/power-test1 --failed)",
+      "Bash(gh run list --repo k018c1088/power-test1 --limit 3)",
+      "Bash(gh api repos/k018c1088/power-test1 --jq '.has_discussions')",
+      "Bash(gh secret list --repo k018c1088/power-test1)",
+      "Bash(grep -h \"^category:\" \"d:/DATA/code/claude_ai/power-test1/blog-modern/src/content/blog/\"*.md)",
+      "Bash(grep -l \"draft: true\" \"d:/DATA/code/claude_ai/power-test1/blog-modern/src/content/blog/\"*.md)",
+      "Bash(xargs -I{} basename {})"
     ]
   }
 }
