@@ -27,7 +27,8 @@
       "Bash(npm install @astrojs/mdx @astrojs/sitemap @tailwindcss/vite tailwindcss@4)",
       "Bash(npm install @astrojs/rss)",
       "Bash(npm run build)",
-      "Bash(gh auth status)"
+      "Bash(gh auth status)",
+      "Bash(gh repo create power-test1 --public --source=. --push --description \"Personal tech blog system with dual designs \\(Modern & Magazine\\) - Astro 5 + Tailwind CSS 4 + AI auto-posting\")"
     ]
   }
 }

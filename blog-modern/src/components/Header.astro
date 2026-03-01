@@ -1,9 +1,9 @@
 ---
 const navLinks = [
-  { href: '/blog-modern/', label: 'Home' },
-  { href: '/blog-modern/blog/', label: 'Blog' },
-  { href: '/blog-modern/downloads/', label: 'Downloads' },
-  { href: '/blog-modern/about/', label: 'About' },
+  { href: '/power-test1/blog-modern/', label: 'Home' },
+  { href: '/power-test1/blog-modern/blog/', label: 'Blog' },
+  { href: '/power-test1/blog-modern/downloads/', label: 'Downloads' },
+  { href: '/power-test1/blog-modern/about/', label: 'About' },
 ];
 ---
 
@@ -14,7 +14,7 @@ const navLinks = [
   <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
     <!-- Logo -->
     <a
-      href="/blog-modern/"
+      href="/power-test1/blog-modern/"
       class="flex items-center gap-2 text-lg font-bold tracking-tight"
     >
       <span
@@ -162,14 +162,14 @@ const navLinks = [
     // Search button - open search page
     const searchBtn = document.getElementById('search-btn');
     searchBtn?.addEventListener('click', () => {
-      window.location.href = '/blog-modern/search/';
+      window.location.href = '/power-test1/blog-modern/search/';
     });
 
     // Ctrl+K shortcut
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
-        window.location.href = '/blog-modern/search/';
+        window.location.href = '/power-test1/blog-modern/search/';
       }
     });
 

@@ -27,13 +27,13 @@ import BackToTop from '../components/BackToTop.astro';
     if (!document.querySelector('link[href*="pagefind-ui.css"]')) {
       var link = document.createElement('link');
       link.rel = 'stylesheet';
-      link.href = '/blog-magazine/pagefind/pagefind-ui.css';
+      link.href = '/power-test1/blog-magazine/pagefind/pagefind-ui.css';
       document.head.appendChild(link);
     }
 
     // Pagefind UI lazy load
     try {
-      var mod = await import('/blog-magazine/pagefind/pagefind-ui.js');
+      var mod = await import('/power-test1/blog-magazine/pagefind/pagefind-ui.js');
       new mod.PagefindUI({
         element: '#search',
         showSubResults: true,

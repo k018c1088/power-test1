@@ -13,7 +13,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/blog-modern/blog/${post.id}/`,
+      link: `/power-test1/blog-modern/blog/${post.id}/`,
       categories: post.data.tags,
     })),
     customData: '<language>ja</language>',

@@ -35,4 +35,4 @@ fileSize: "2.4 KB"
 
 ## 関連記事
 
-詳しい解説は [Git Cherryで見つけるマージ漏れ](/blog-modern/blog/git-cherry-merge-detection/) をご覧ください。
+詳しい解説は [Git Cherryで見つけるマージ漏れ](/power-test1/blog-modern/blog/git-cherry-merge-detection/) をご覧ください。

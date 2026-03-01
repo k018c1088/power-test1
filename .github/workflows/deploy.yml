@@ -1,0 +1,76 @@
+name: Deploy Blogs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog-modern/**'
+      - 'blog-magazine/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install blog-modern dependencies
+        run: npm ci
+        working-directory: blog-modern
+
+      - name: Install blog-magazine dependencies
+        run: npm ci
+        working-directory: blog-magazine
+
+      - name: Build blog-modern
+        run: npm run build
+        working-directory: blog-modern
+
+      - name: Build blog-magazine
+        run: npm run build
+        working-directory: blog-magazine
+
+      - name: Combine outputs
+        run: |
+          mkdir -p _site/blog-modern _site/blog-magazine
+          cp -r blog-modern/dist/* _site/blog-modern/
+          cp -r blog-magazine/dist/* _site/blog-magazine/
+          # Root redirect to blog-modern
+          cat > _site/index.html << 'HEREDOC'
+          <!DOCTYPE html>
+          <html>
+          <head><meta http-equiv="refresh" content="0;url=/power-test1/blog-modern/"></head>
+          <body><a href="/power-test1/blog-modern/">Go to Blog</a></body>
+          </html>
+          HEREDOC
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
