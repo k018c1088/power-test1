@@ -86,3 +86,19 @@ const { latestPost, totalPosts } = Astro.props;
     </div>
   </div>
 </section>
+
+<script is:inline>
+(function () {
+  var base = "https://lacue.goatcounter.com/counter/";
+  function set(id, url) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d.count && d.count !== "0") el.textContent = d.count; })
+      .catch(function () {});
+  }
+  set("hero-views", base + "TOTAL.json");
+  set("hero-downloads", base + encodeURIComponent("/power-test1/blog-modern/downloads/") + ".json");
+})();
+</script>

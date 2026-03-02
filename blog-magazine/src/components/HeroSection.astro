@@ -93,11 +93,37 @@ const { latestPost, totalPosts, recentPosts = [] } = Astro.props;
 
       <!-- Stats Card -->
       <div class="rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 p-5 text-white flex flex-col justify-center items-center text-center">
-        <div class="text-4xl font-display font-bold mb-1">{totalPosts}</div>
-        <div class="text-sm opacity-80">Articles Published</div>
-        <div class="w-12 h-0.5 bg-white/30 my-3"></div>
-        <div class="text-xs opacity-60">AI & Tech Insights</div>
+        <div class="grid grid-cols-3 gap-4 w-full">
+          <div>
+            <div class="text-3xl font-display font-bold">{totalPosts}</div>
+            <div class="text-xs opacity-70 mt-1">Articles</div>
+          </div>
+          <div>
+            <div class="text-3xl font-display font-bold" id="hero-views">--</div>
+            <div class="text-xs opacity-70 mt-1">Views</div>
+          </div>
+          <div>
+            <div class="text-3xl font-display font-bold" id="hero-downloads">--</div>
+            <div class="text-xs opacity-70 mt-1">Downloads</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
+
+<script is:inline>
+(function () {
+  var base = "https://lacue.goatcounter.com/counter/";
+  function set(id, url) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (d) { if (d.count && d.count !== "0") el.textContent = d.count; })
+      .catch(function () {});
+  }
+  set("hero-views", base + "TOTAL.json");
+  set("hero-downloads", base + encodeURIComponent("/power-test1/blog-magazine/downloads/") + ".json");
+})();
+</script>
