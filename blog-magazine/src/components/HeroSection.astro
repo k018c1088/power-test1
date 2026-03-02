@@ -119,7 +119,7 @@ const { latestPost, totalPosts, recentPosts = [] } = Astro.props;
     var el = document.getElementById(id);
     if (!el) return;
     fetch(url)
-      .then(function (r) { return r.json(); })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (d) { if (d.count && d.count !== "0") el.textContent = d.count; })
       .catch(function () {});
   }
