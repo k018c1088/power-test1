@@ -124,6 +124,6 @@ const { latestPost, totalPosts, recentPosts = [] } = Astro.props;
       .catch(function () {});
   }
   set("hero-views", base + "TOTAL.json");
-  set("hero-downloads", base + encodeURIComponent("/power-test1/blog-magazine/downloads/") + ".json");
+  set("hero-downloads", base + "/power-test1/blog-magazine/downloads/.json");
 })();
 </script>
