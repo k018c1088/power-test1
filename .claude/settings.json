@@ -1,0 +1,116 @@
+﻿{
+  "permissions": {
+    "allow": [
+      "Read",
+      "WebSearch",
+      "WebFetch",
+
+      "mcp__ollama",
+      "mcp__context7",
+      "mcp__sequential-thinking",
+      "mcp__playwright",
+      "mcp__filesystem",
+      "mcp__kokoro-tts",
+      "mcp__whisper-stt",
+      "mcp__comfyui",
+
+      "Bash(git *)",
+      "Bash(git status)",
+      "Bash(git log)",
+      "Bash(git diff)",
+
+      "Bash(npm *)",
+      "Bash(npx *)",
+      "Bash(pnpm *)",
+      "Bash(yarn *)",
+      "Bash(bun *)",
+      "Bash(node *)",
+
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(pip *)",
+      "Bash(pip3 *)",
+      "Bash(pytest *)",
+      "Bash(uv *)",
+
+      "Bash(cargo *)",
+      "Bash(go *)",
+      "Bash(make *)",
+
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+
+      "Bash(ls)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(wc *)",
+      "Bash(file *)",
+      "Bash(diff *)",
+      "Bash(which *)",
+      "Bash(where *)",
+
+      "Bash(echo *)",
+      "Bash(test *)",
+      "Bash(mkdir *)",
+      "Bash(touch *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(rm *)",
+      "Bash(chmod *)",
+      "Bash(tar *)",
+
+      "Bash(sed *)",
+      "Bash(awk *)",
+      "Bash(sort *)",
+      "Bash(tr *)",
+      "Bash(cut *)",
+      "Bash(jq *)",
+      "Bash(curl *)",
+
+      "Bash(pwd)",
+      "Bash(env)",
+      "Bash(env *)",
+
+      "Bash(* --version)",
+      "Bash(* --help)",
+
+      "Bash(powershell.exe *)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/*)",
+
+      "Bash(git push --force *)",
+      "Bash(git push --force)",
+      "Bash(git push -f *)",
+      "Bash(git push -f)",
+      "Bash(git reset --hard *)",
+      "Bash(git reset --hard)",
+      "Bash(git clean -fd *)",
+      "Bash(git clean -f *)",
+
+      "Bash(sudo *)",
+      "Bash(winget install *)",
+      "Bash(winget uninstall *)",
+
+      "Bash(curl * | sh)",
+      "Bash(curl * | bash)",
+
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Edit(~/.ssh/**)",
+      "Edit(~/.aws/**)",
+      "Edit(~/.gnupg/**)",
+      "Edit(~/.gitconfig)",
+      "Edit(~/.npmrc)"
+    ]
+  }
+}

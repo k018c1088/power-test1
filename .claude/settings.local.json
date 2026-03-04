@@ -43,7 +43,16 @@
       "Bash(gh secret list --repo k018c1088/power-test1)",
       "Bash(grep -h \"^category:\" \"d:/DATA/code/claude_ai/power-test1/blog-modern/src/content/blog/\"*.md)",
       "Bash(grep -l \"draft: true\" \"d:/DATA/code/claude_ai/power-test1/blog-modern/src/content/blog/\"*.md)",
-      "Bash(xargs -I{} basename {})"
+      "Bash(xargs -I{} basename {})",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_click",
+      "WebFetch(domain:www.goatcounter.com)",
+      "WebFetch(domain:lacue.goatcounter.com)",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_run_code"
     ]
   }
 }
