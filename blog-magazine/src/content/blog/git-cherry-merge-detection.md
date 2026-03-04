@@ -22,6 +22,7 @@ git cherry -v main develop
 ```
 
 出力例：
+
 ```
 + abc1234 feat: add new feature
 - def5678 fix: bug fix (already in main)
@@ -39,7 +40,7 @@ git cherry -v main develop
 2. 結果をわかりやすく出力
 3. CI/CDパイプラインに組み込み可能（exit codeで判定）
 
-### 実装
+### 実装（Bash / Linux・Mac）
 
 ```bash
 #!/bin/bash
@@ -68,14 +69,56 @@ else
 fi
 ```
 
+### 実装（PowerShell / Windows）
+
+```powershell
+# merge-check.ps1 - マージ漏れ検知スクリプト (Windows)
+param(
+    [string]$SourceBranch = "develop",
+    [string]$TargetBranch = "release",
+    [string]$Exclude = "",
+    [switch]$Strict
+)
+
+Write-Host "=== Merge Check ===" -ForegroundColor Cyan
+Write-Host "Source: $SourceBranch"
+Write-Host "Target: $TargetBranch"
+Write-Host ""
+
+# マージ漏れコミットを検出
+$cherryOutput = git cherry -v $TargetBranch $SourceBranch
+$missing = $cherryOutput | Where-Object { $_ -match '^\+' }
+
+# 除外パターン適用
+if ($Exclude) {
+    $missing = $missing | Where-Object { $_ -notmatch $Exclude }
+}
+
+if (-not $missing) {
+    Write-Host "[OK] No missing commits found." -ForegroundColor Green
+    exit 0
+} else {
+    Write-Host "[NG] Missing commits detected:" -ForegroundColor Red
+    $missing | ForEach-Object { Write-Host "  $_" -ForegroundColor Yellow }
+    Write-Host ""
+    Write-Host "Total: $($missing.Count) commit(s)" -ForegroundColor Red
+    if ($Strict) { exit 1 } else { exit 0 }
+}
+```
+
 ### 使い方
 
 ```bash
-# 基本実行
+# Bash（Linux / Mac / Git Bash）
 ./merge-check.sh develop release
-
-# CI/CDでの使用
 ./merge-check.sh develop release || echo "WARN: Merge leak detected!"
+```
+
+```powershell
+# PowerShell（Windows）
+.\merge-check.ps1 -SourceBranch develop -TargetBranch release
+.\merge-check.ps1 develop release -Exclude "WIP|fixup"
+.\merge-check.ps1 develop release -Strict  # マージ漏れで exit 1
 ```
 
 ## CI/CDへの組み込み
@@ -83,10 +126,16 @@ fi
 GitHub Actionsでリリース前チェックとして実行できます：
 
 ```yaml
+# Linux runner
 - name: Check for merge leaks
   run: |
     chmod +x ./scripts/merge-check.sh
     ./scripts/merge-check.sh develop main
+
+# Windows runner
+- name: Check for merge leaks (Windows)
+  shell: pwsh
+  run: .\scripts\merge-check.ps1 develop main -Strict
 ```
 
 ## まとめ
